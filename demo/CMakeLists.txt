@@ -1,0 +1,11 @@
+file(GLOB SOURCES "*.cpp")
+include_directories(${LHSS_SOURCE_DIR}/include)
+include_directories(${LHSS_SOURCE_DIR}/include/lattice)
+include_directories(${LHSS_SOURCE_DIR}/include/lhss)
+
+foreach (SOURCE_CPP ${SOURCES})
+  get_filename_component(EXENAME ${SOURCE_CPP} NAME_WE)
+  get_filename_component(SOURCENAME ${SOURCE_CPP} NAME)
+  add_executable(${EXENAME} ${SOURCENAME})
+  target_link_libraries(${EXENAME} ${LINK_LIBS})
+endforeach (SOURCE_CPP)
