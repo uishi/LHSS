@@ -9,7 +9,6 @@
 
 namespace lhss
 {
-// Pre-computation for Chinese Remaindering
 struct CRT
 {
   std::vector<UIntType> qis;
@@ -76,6 +75,7 @@ struct CRT
     val %= q;
   }
 
+#if 0
   void ComputeReconstructRem(const std::vector<UIntType>& rems, mpz_class& val)
   {
     if (rems.size() != qis.size())
@@ -95,6 +95,7 @@ struct CRT
     }
     val /= q;
   }
+#endif
 
   void Set(const std::vector<UIntType>& moduli)
   {

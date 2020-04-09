@@ -657,7 +657,6 @@ struct PolyConv
     }
   }
 
-  // TODO correct??
   static void BigToCRTPoly(const BigPoly& bp, CRTPoly& p_dest)
   {
     mpz_class fake;

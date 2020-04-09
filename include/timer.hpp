@@ -6,22 +6,22 @@ struct TIMER
 {
   std::chrono::high_resolution_clock::time_point start, end;
 
-  inline void StartTimer()
+  void StartTimer()
   {
     start = std::chrono::high_resolution_clock::now();
   }
 
-  inline void StopTimer()
+  void StopTimer()
   {
     end = std::chrono::high_resolution_clock::now();
   }
 
-  inline double GetUs()
+  double GetUs()
   {
     return (long double)(std::chrono::duration_cast<std::chrono::microseconds>(end - start).count())/1.0;
   }
 
-  inline double GetMs()
+  double GetMs()
   {
     return (long double)(std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count())/1.0;
   }
@@ -38,10 +38,5 @@ struct TIMER
   {
     auto diff = e - s;
     return (long double)(std::chrono::duration_cast<std::chrono::milliseconds>(diff).count())/1.0;
-  }
-
-  inline void WriteElapsedSec(std::ostream& os)
-  {
-    os << static_cast<long double>(std::chrono::duration_cast<std::chrono::microseconds>(end - start).count()/1.0)*1000000;
   }
 };

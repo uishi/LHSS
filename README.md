@@ -1,10 +1,6 @@
 # LHSS (Lattice-based Homomorphic Secret Sharing)
 
-LHSS provides a C++ implementation of Lattice-based homomorphic secret sharing (HSS) based on [BKS19], in which we can build 
-
-* a secure two-party computation with minimal interactions, and
-
-* two server PIR-style applications supporting expressive query and data manipulation.
+LHSS provides a C++ implementation of Lattice-based homomorphic secret sharing (HSS) based on [BKS19], that allows us to build a secure two-party computation protocol.
 
 [BKS19] Elette Boyle and Lisa Kohl and Peter Scholl, "Homomorphic Secret Sharing from Lattices Without FHE", pp. 3 -- 33, vol. 11477, LNCS, Advances in Cryptology -- EUROCRYPT 2019, Springer Berlin Heidelberg, 2019.
 

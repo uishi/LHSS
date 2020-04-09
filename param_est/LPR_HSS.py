@@ -8,11 +8,12 @@ BOUND_SK          = 1
 ERROR_STD         = 3.2
 BOUND_ERROR       = 8 * ERROR_STD
 HAMMING_WEIGHT_SK = 64
-INITIAL_RING_DIM  = 4096
+INITIAL_RING_DIM  = 8192
 
 def compute_plain_mod(N: int, Bmax: int, hsk: int):
     return  (2 ** (kappa + 2)) * N * Bmax * hsk
 
+# NOTE: 2^{kappa + 2} is correct
 def compute_ctxt_mod(p: int, N: int, Bmax: int, Berr: int, hsk: int):
     return (2 ** (kappa + 2)) *  (N ** 2) * Bmax * Berr * (2 * hsk + 1) * p
 
@@ -21,6 +22,8 @@ if __name__ == "__main__" :
     Berr = BOUND_ERROR
     hsk = HAMMING_WEIGHT_SK
     N = INITIAL_RING_DIM
+
+    # TODO: Provide lower-bound of log(q) from from N
 
     Bmax_list  = range(1, 65)
     kappa_list = range(40, 81)

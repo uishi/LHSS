@@ -1,11 +1,7 @@
 #pragma once
 
-#ifdef __GNUC__
-  using u128 = unsigned __int128;
-  using i128 = __int128;
-#else
-  static_assert(false, "GCC only")
-#endif
+using u128 = unsigned __int128;
+using i128 = __int128;
 
 using UIntType = std::uint64_t;
 using SIntType = std::int64_t;

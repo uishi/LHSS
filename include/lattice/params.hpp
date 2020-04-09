@@ -18,22 +18,12 @@ namespace lhss
 
 namespace const_params
 {
-const std::size_t kMaxDeg = 65536;
+constexpr std::size_t kMaxDeg = 65536;
 constexpr DoubleUIntType kTwoPow64 = static_cast<DoubleUIntType>(1) << 64;
 // Some moduli are borrowed from NFLlib
-const UIntType kPrimes[] = {
+constexpr UIntType kPrimes[] = {
   4611686018326724609ULL, 4611686018309947393ULL, 4611686018282684417ULL, 4611686018257518593ULL, 4611686018232352769ULL, 4611686018171535361ULL, 4611686018106523649ULL, 4611686018058289153ULL,
   4611686018051997697ULL, 4611686017974403073ULL, 4611686017812922369ULL, 4611686017781465089ULL, 4611686017773076481ULL, 4611686017678704641ULL, 4611686017666121729ULL, 4611686017647247361ULL, 4611686017590624257ULL, 4611686017554972673ULL, 
-  4611686017529806849ULL, 4611686017517223937ULL, 4611686017496252417ULL, 4611686017489960961ULL, 4611686017439629313ULL, 4611686017429143553ULL, 4611686017401880577ULL, 4611686017376714753ULL, 4611686017290731521ULL, 4611686017246691329ULL,
-  4611686017244594177ULL, 4611686017215234049ULL, 4611686017208942593ULL, 4611686017196359681ULL, 4611686017013907457ULL, 4611686016879689729ULL, 4611686016867106817ULL, 4611686016709820417ULL, 4611686016667877377ULL, 4611686016649003009ULL,
-  4611686016628031489ULL, 4611686016546242561ULL, 4611686016470745089ULL, 4611686016428802049ULL, 4611686016359596033ULL, 4611686016321847297ULL, 4611686016284098561ULL, 4611686016275709953ULL, 4611686016233766913ULL, 4611686016221184001ULL, 
-  4611686016202309633ULL, 4611686016187629569ULL, 4611686016175046657ULL, 4611686016168755201ULL, 4611686016164560897ULL, 4611686016137297921ULL, 4611686016118423553ULL, 4611686016093257729ULL, 4611686015969525761ULL, 4611686015831113729ULL,
-  4611686015791267841ULL, 4611686015787073537ULL, 4611686015717867521ULL, 4611686015709478913ULL, 4611686015478792193ULL, 4611686015432654849ULL, 4611686015420071937ULL, 4611686015403294721ULL, 4611686015308922881ULL, 4611686015193579521ULL, 
-  4611686015032098817ULL, 4611686015013224449ULL, 4611686015004835841ULL, 4611686014910464001ULL, 4611686014891589633ULL, 4611686014887395329ULL, 4611686014860132353ULL, 4611686014753177601ULL, 4611686014679777281ULL, 4611686014639931393ULL, 
-  4611686014583308289ULL, 4611686014545559553ULL, 4611686014532976641ULL, 4611686014476353537ULL, 4611686014459576321ULL, 4611686014407147521ULL, 4611686014402953217ULL, 4611686014388273153ULL, 4611686014381981697ULL, 4611686014312775681ULL, 
-  4611686014283415553ULL, 4611686014256152577ULL, 4611686014182752257ULL, 4611686014157586433ULL, 4611686014105157633ULL, 4611686014088380417ULL, 4611686014048534529ULL, 4611686013973037057ULL, 4611686013941579777ULL, 4611686013723475969ULL, 
-  4611686013721378817ULL, 4611686013715087361ULL, 4611686013639589889ULL, 4611686013482303489ULL, 4611686013419388929ULL, 4611686013377445889ULL, 4611686013270491137ULL, 4611686013262102529ULL, 4611686013169827841ULL, 4611686013119496193ULL, 
-  4611686013106913281ULL, 4611686013092233217ULL, 4611686013085941761ULL, 4611686013067067393ULL, 4611686013010444289ULL, 4611686012949626881ULL, 4611686012947529729ULL, 4611686012909780993ULL, 4611686012840574977ULL, 4611686012834283521ULL, 
   4611686012710551553ULL, 4611686012664414209ULL, 4611686012653928449ULL, 4611686012616179713ULL, 4611686012546973697ULL, 4611686012475670529ULL
   };
 }
@@ -139,7 +129,6 @@ struct Params
       P = crt_p.q;
     }
     // NOTE:
-    // When Q is not divisible by P, one can construct a BFV scheme.
     q_div_p = Q / P;
   }
 
@@ -192,7 +181,6 @@ struct Params
 
   /**
    * Computes powers of 2n-th root of unity mod q_i and those of the inverse of 2n-th root of unity mod q_i for number theoretic transform with negative wrap-around.
-   * TODO: Scaled powers of roots of unity for lazy reduction
    */
   static void ComputeRootsOfUnity()
   {
@@ -207,7 +195,7 @@ struct Params
       UIntType inv_mth_root;
 
       if (!FindPrimitiveRoot(2*n, z_qi[i].modulus, mth_root))
-        throw std::invalid_argument("\tA prtimitive 2n-th root of unity was not found!");
+        throw std::invalid_argument("\tA prtimitive 2n-th root of unity was not found.");
     
       MultInverse(mth_root, z_qi[i].modulus, inv_mth_root);
       mth_roots_of_unities.push_back(mth_root);
@@ -240,78 +228,15 @@ struct Params
     printf("=========================\n");
   }
 
-  // NTT Params
-  // LN16: Store powers of (inverse of) a 2n-th root of unity in bit-reveresed order.
-  // Chen et al. 14: Store powers of (inverse of) a 2n-th (n-th) root of unity.
+  // NTT Params: Store powers of (inverse of) a 2n-th root of unity in bit-reveresed order.
   static void ComputeNTTParams()
   {
     ntts.reserve(Params::num_moduli);
     for (std::size_t i = 0; i < Params::num_moduli; ++i)
     {
-      auto modulus = Params::z_qi[i].modulus;
-      // m = 2n
-      std::vector<UIntType> power_mth_roots_of_unities(Params::n);
-      std::vector<UIntType> power_inv_mth_roots_of_unities(Params::n);
-      std::vector<UIntType> power_mth_roots_of_unities_shoup(Params::n);
-      std::vector<UIntType> power_inv_mth_roots_of_unities_shoup(Params::n);
-    
       UIntType mth_root = Params::mth_roots_of_unities[i];
       UIntType inv_mth_root = Params::inv_mth_roots_of_unities[i];
-
-      UIntType power_mth_root = 1;
-      UIntType power_inv_mth_root = 1;
-      UIntType power_mth_root_shoup = 1;
-      UIntType power_inv_mth_root_shoup = 1;
-
-      power_mth_roots_of_unities[0] = power_mth_root;
-      power_inv_mth_roots_of_unities[0] = power_inv_mth_root;
-      ModArith::ComputeBarrettConstShoup(modulus, power_mth_root, power_mth_root_shoup);
-      ModArith::ComputeBarrettConstShoup(modulus, power_inv_mth_root, power_inv_mth_root_shoup);
-      power_mth_roots_of_unities_shoup[0] = power_mth_root_shoup;
-      power_inv_mth_roots_of_unities_shoup[0] = power_inv_mth_root_shoup;
-
-      for (std::size_t j = 1; j < Params::n; ++j)
-      {
-        Params::z_qi[i].MulModEqual(mth_root, power_mth_root);
-        Params::z_qi[i].MulModEqual(inv_mth_root, power_inv_mth_root);
-        power_mth_roots_of_unities[j] = power_mth_root;
-        power_inv_mth_roots_of_unities[j] = power_inv_mth_root;
-
-        ModArith::ComputeBarrettConstShoup(modulus, power_mth_root, power_mth_root_shoup);
-        ModArith::ComputeBarrettConstShoup(modulus, power_inv_mth_root, power_inv_mth_root_shoup);
-        power_mth_roots_of_unities_shoup[j] = power_mth_root_shoup;
-        power_inv_mth_roots_of_unities_shoup[j] = power_inv_mth_root_shoup;
-
-      }
-
-      // std::vector<UIntType> bitrev_power_mth_roots_of_unities(2 * Params::n);
-      // std::vector<UIntType> bitrev_power_inv_mth_roots_of_unities(2 * Params::n);
-      std::vector<UIntType> bitrev_power_mth_roots_of_unities(Params::n);
-      std::vector<UIntType> bitrev_power_inv_mth_roots_of_unities(Params::n);
-      std::vector<UIntType> bitrev_power_mth_roots_of_unities_shoup(Params::n);
-      std::vector<UIntType> bitrev_power_inv_mth_roots_of_unities_shoup(Params::n);
-      
-      // Store power of zeta2n in bit-reversed order
-      PermuteBitRev(power_mth_roots_of_unities, bitrev_power_mth_roots_of_unities);
-      // Store power of inv_zeta2n in bit-reversed order
-      PermuteBitRev(power_inv_mth_roots_of_unities, bitrev_power_inv_mth_roots_of_unities);
-
-      PermuteBitRev(power_inv_mth_roots_of_unities_shoup, bitrev_power_inv_mth_roots_of_unities_shoup);
-      PermuteBitRev(power_mth_roots_of_unities_shoup, bitrev_power_mth_roots_of_unities_shoup);
-
-
-      UIntType invn, invn_shoup;
-      MultInverse(n, z_qi[i].modulus, invn);
-      ModArith::ComputeBarrettConstShoup(modulus, invn, invn_shoup);
-      // NTTParams<UIntType> ntt(power_nth_roots_of_unities, power_inv_nth_roots_of_unities, power_mth_roots_of_unities, power_inv_mth_roots_of_unities, bitrev_power_mth_roots_of_unities, bitrev_power_inv_mth_roots_of_unities, invn);
-      NTTParams ntt(
-       bitrev_power_mth_roots_of_unities,
-       bitrev_power_inv_mth_roots_of_unities,
-       bitrev_power_mth_roots_of_unities_shoup,
-       bitrev_power_inv_mth_roots_of_unities_shoup,
-       invn,
-       invn_shoup);
-      ntts.push_back(std::move(ntt));
+      ntts.push_back(NTTParams(mth_root, inv_mth_root, Params::z_qi[i], Params::n));
     } // end for i
   }
 
@@ -331,7 +256,7 @@ struct Params
   }
 
   /**
-   * Assign p from RNS moduli
+   * Assigns p from RNS moduli
    */
   static void ComputeP(const std::vector<UIntType>& plain_moduli)
   {

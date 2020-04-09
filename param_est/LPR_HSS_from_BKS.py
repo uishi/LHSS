@@ -22,8 +22,10 @@ if __name__ == "__main__" :
     hsk = HAMMING_WEIGHT_SK
     N = INITIAL_RING_DIM
 
+    # TODO: Provide lower-bound of log(q) from from N
+
     Bmax_list  = range(1, 65)
-    kappa_list = range(40, 41)
+    kappa_list = range(40, 81)
 
     for e_fail in kappa_list:
       print(" Failure Prob. / RMS Mult. <= 2^-{} ".format(e_fail))

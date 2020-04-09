@@ -36,7 +36,7 @@ void EncryptZero(const PkPtr& pk, Ciphertext& ct)
   CRTSampler::SamplePolyFromNormalDist(ct.GetA());
     
   CRTPoly v;
-#if SAMPLE_OPT
+#ifdef SAMPLE_OPT
   CRTSampler::SampleUniformTernary(v);
 #else
   CRTSampler::SamplePolyFromNormalDist(v);
@@ -69,7 +69,6 @@ void Encrypt(const PkPtr& pk, const Poly& m, Ciphertext& ct)
   EncryptZero(pk, ct);
   CRTPoly::AddModEqual(m_times_delta, ct.GetB());
 }
-
 
 /**
  * Performs LPR encryption under the public key

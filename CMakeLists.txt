@@ -1,14 +1,14 @@
-cmake_minimum_required(VERSION 3.10.0)
+cmake_minimum_required(VERSION 3.0.0)
 
 project(LHSS VERSION 0.0.1 LANGUAGES CXX C)
 
-# TODO
-# Make Release mode by default
+if (NOT CMAKE_BUILD_TYPE OR CMAKE_BUILD_TYPE STREQUAL "")
+ set(CMAKE_BUILD_TYPE "Release" CACHE STRING "" FORCE)
+endif()
 
-set(CMAKE_CXX_STANDARD 17)
-set(CMAKE_CXX_COMPILER "/usr/bin/g++")
+set(CMAKE_CXX_COMPILERS /usr/bin/g++)
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -std=c++17 -mbmi2 -O2")
+
 set(LINK_LIBS gmpxx gmp)
-
-set(CMAKE_CXX_FLAGS "-Wall -Wextra -std=c++17 -maes -mbmi2 -O2")
 
 add_subdirectory(demo)

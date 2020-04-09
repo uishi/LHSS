@@ -172,7 +172,7 @@ UIntType ExpAndMod(const UIntType base, const UIntType exp, const UIntType modul
   return static_cast<UIntType>(pow);
 }
 
-// From SEAL
+// from SEAL
 bool IsPrimitiveRoot(const UIntType root, UIntType m, UIntType modulus)
 {
   if (root == 0)
@@ -211,6 +211,7 @@ bool FindPrimitiveRoot(const UIntType m, const UIntType prime_modulus, UIntType 
 
   return IsPrimitiveRoot(root, m, prime_modulus);
 }
+
 void MultModEqualNaive(const std::uint64_t a, const std::uint64_t mod, std::uint64_t& res)
 {
   u128 prod = static_cast<u128>(a) * res;

@@ -8,7 +8,7 @@ int main ()
 {
   // Parameter Setup
   // The maximum magnitude (in bits) of the messages during the secure computation should be provided.
-  Setup(32); // message magnitudes are upperbounded by 2^64
+  Setup(64); // message magnitudes are upperbounded by 2^64
 
   // Key-generation internally perfomed in the client instance
   Client c;

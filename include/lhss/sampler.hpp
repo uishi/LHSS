@@ -17,8 +17,6 @@ struct SmallSampler
 {
   using SmallPoly = Poly;
 
-  // static std::random_device rd;
-
 //   // @param poly  
 //   static void SamplePolyFromUniformTernary(SmallPoly& p) {
 //     std::random_device rd;
@@ -34,7 +32,6 @@ struct SmallSampler
 //     }
 //   }
 
-//  @param poly  
   static void SamplePolyFromUniformMod(SmallPoly& p, UIntType modulus)
   {
     std::random_device rd("/dev/urandom");
@@ -71,7 +68,7 @@ struct CRTSampler
       for (std::size_t j = 0; j < Params::n; ++j)
       {
         p.small_polys[i].coeffs[j] = noise_poly[j];
-         // if the noise is negative, adds the modulus to it
+         // if the noise is negative
         p.small_polys[i].coeffs[j] += mod & signs[j];
       }
     }
